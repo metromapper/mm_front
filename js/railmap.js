@@ -29,23 +29,55 @@ d3.json("./lib/topojson/tokyo.topojson", function(data){
         .attr("fill", "#002b36")
         .attr("stroke", "#333333")
         .attr("stroke_width", 0.2);
+    //console.log(tokyo23.features.length);
+    console.log(svg.selectAll("path"));
 
-    d3.json("lib/metro2.topojson", function(data2) {
-        console.log(data2);
-        var path = d3.geo.path().projection(projection);
-        var rail = topojson.feature(data2, data2.objects.metro2);
-
+    // warning:
+    // tokyo23を描画した時に何かしらのindexが106までいってて，メトロを描画する時にそのインデックスが106からはじまってしまっているから欠けてる．
+    // selectAll("path")が原因らしい
+    d3.json("tokyo_metro.topojson", function(data2) {
+        console.log("All Metro");
+        var count = 1;
+        var path2 = d3.geo.path().projection(projection);
+        var rail = topojson.feature(data2, data2.objects.tokyo_metro);
+        //console.log(rail.features);
+        //console.log(path2);
         svg.selectAll("path")
             .data(rail.features)
             .enter()
             .append('path')
-            .attr('d', path)
+            .attr('d', path2)
             .attr('fill-opacity', 0)
-            .attr('stroke', function(d){
+            .attr('stroke', function(d,i){
+                //console.log(i);
                 if(d.properties.name == "11号線半蔵門線"){
                     return "#9b7cb6"
                 }
-                return "#9b7cb6"
+                if(d.properties.name == "13号線副都心線"){
+                    return "#bb641d"
+                }
+                if(d.properties.name == "4号線丸ノ内線" | d.properties.name == "4号線丸ノ内線分岐線"){
+                    return "#e60012"
+                }
+                if(d.properties.name == "2号線日比谷線"){
+                    return "#9caeb7"
+                }
+                if(d.properties.name == "3号線銀座線"){
+                    return "#f39700"
+                }
+                if(d.properties.name == "5号線東西線"){
+                    return "#00a7db"
+                }
+                if(d.properties.name == "7号線南北線"){
+                    return "#00ada9"
+                }
+                if(d.properties.name == "8号線有楽町線"){
+                    return "#d7c447"
+                }
+                if(d.properties.name == "9号線千代田線"){
+                    return "#009944"
+                }
+                return "#fff"
             })
             .attr('stroke-opacity', 1)
             .attr('stroke-width', '0.5px')
@@ -58,8 +90,8 @@ d3.json("./lib/topojson/tokyo.topojson", function(data){
                     }
                 });
             });
-
     });
+
 
 });
 
