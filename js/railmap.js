@@ -26,23 +26,15 @@ d3.json("./lib/topojson/tokyo.topojson", function(data){
         .enter()
         .append("path")
         .attr("d", path)
-        .attr("fill", "#002b36")
-        .attr("stroke", "#333333")
-        .attr("stroke_width", 0.2);
-    //console.log(tokyo23.features.length);
-    console.log(svg.selectAll("path"));
+        .attr("fill", "#141414")
+        .attr("stroke", "#eeeeee")
+        .attr("stroke-width", 0.5);
 
-    // warning:
-    // tokyo23を描画した時に何かしらのindexが106までいってて，メトロを描画する時にそのインデックスが106からはじまってしまっているから欠けてる．
-    // selectAll("path")が原因らしい
     d3.json("tokyo_metro.topojson", function(data2) {
-        console.log("All Metro");
         var count = 1;
         var path2 = d3.geo.path().projection(projection);
         var rail = topojson.feature(data2, data2.objects.tokyo_metro);
-        //console.log(rail.features);
-        //console.log(path2);
-        svg.selectAll("path")
+        svg.selectAll("metroRailPath")
             .data(rail.features)
             .enter()
             .append('path')
@@ -80,13 +72,15 @@ d3.json("./lib/topojson/tokyo.topojson", function(data){
                 return "#fff"
             })
             .attr('stroke-opacity', 1)
-            .attr('stroke-width', '0.5px')
+            .attr('stroke-width', '2px')
             .on("mouseover", function(d){
+                console.log(d);
                 var name = d.properties.name;
-                console.log(d3.select(this));
                 svg.selectAll("path").attr('stroke-width', function(d){
                     if(d.properties.name == name){
                         return "2px";
+                    }else{
+                        return "0.5px";
                     }
                 });
             });
