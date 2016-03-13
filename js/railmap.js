@@ -30,18 +30,17 @@ d3.json("./lib/topojson/tokyo.topojson", function(data){
         .attr("stroke", "#eeeeee")
         .attr("stroke-width", 0.5);
 
-    d3.json("tokyo_metro.topojson", function(data2) {
-        var count = 1;
-        var path2 = d3.geo.path().projection(projection);
-        var rail = topojson.feature(data2, data2.objects.tokyo_metro);
+    d3.json("tokyo_metro.topojson", function(data) {
+        var path = d3.geo.path().projection(projection);
+        var rail = topojson.feature(data, data.objects.tokyo_metro);
         svg.selectAll("metroRailPath")
             .data(rail.features)
             .enter()
             .append('path')
-            .attr('d', path2)
+            .attr('d', path)
             .attr('fill-opacity', 0)
             .attr('stroke', function(d,i){
-                //console.log(i);
+                console.log(d.properties.name);
                 if(d.properties.name == "11号線半蔵門線"){
                     return "#9b7cb6"
                 }
@@ -77,6 +76,7 @@ d3.json("./lib/topojson/tokyo.topojson", function(data){
                 console.log(d);
                 var name = d.properties.name;
                 svg.selectAll("path").attr('stroke-width', function(d){
+                    console.log(d);
                     if(d.properties.name == name){
                         return "2px";
                     }else{
@@ -84,6 +84,23 @@ d3.json("./lib/topojson/tokyo.topojson", function(data){
                     }
                 });
             });
+    });
+
+    d3.json("lib/tokyo_metro_station.topojson", function(data) {
+        var count = 1;
+        var path = d3.geo.path().projection(projection);
+        var rail = topojson.feature(data, data.objects.tokyo_metro_station);
+        svg.selectAll("metroStation")
+            .data(rail.features)
+            .enter()
+            .append('path')
+            .attr('d', path)
+            .attr('fill-opacity', 0)
+            .attr('stroke', function(d,i){
+                return "#fff"
+            })
+            .attr('stroke-opacity', 1)
+            .attr('stroke-width', '3px')
     });
 
 
