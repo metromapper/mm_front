@@ -11,7 +11,7 @@ var svg = d3.select("body").append("svg")
 d3.json("./lib/topojson/tokyo.topojson", function(data){
 
     var tokyo23 = topojson.feature(data, data.objects.tokyo23);
-    var scale = 100000;
+    var scale = 150000;
 
     // Mercator projection
     var projection = d3.geo.mercator()
@@ -26,7 +26,7 @@ d3.json("./lib/topojson/tokyo.topojson", function(data){
         .enter()
         .append("path")
         .attr("d", path)
-        .attr("fill", "#141414")
+        .attr("fill", "#66CCCC")
         .attr("stroke", "#eeeeee")
         .attr("stroke-width", 0.5);
 
