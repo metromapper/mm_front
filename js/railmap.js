@@ -1,3 +1,20 @@
+
+
+var averageUserAmountArray = {
+    '2号線日比谷線': 113,
+    '3号線銀座線': 107,
+    '4号線丸ノ内線': 110,
+    '4号線丸ノ内線分岐線': 110,
+    '5号線東西線': 132,
+    '7号線南北線': 43,
+    '9号線千代田線': 111,
+    '8号線有楽町線': 87,
+    '11号線半蔵門線': 85,
+    '13号線副都心線': 23
+}
+
+console.log(averageUserAmountArray);
+
 var width = 1200, height = 800;
 
 var svg = d3.select("body").append("svg")
@@ -6,7 +23,6 @@ var svg = d3.select("body").append("svg")
               .append("g")
               .call(d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", zoom))
               .append("g");
-
 
 d3.json("./lib/topojson/tokyo.topojson", function(data){
 
@@ -26,7 +42,7 @@ d3.json("./lib/topojson/tokyo.topojson", function(data){
         .enter()
         .append("path")
         .attr("d", path)
-        .attr("fill", "#66CCCC")
+        .attr("fill", "#B3C4CC")
         .attr("stroke", "#eeeeee")
         .attr("stroke-width", 0.5);
 
@@ -40,7 +56,10 @@ d3.json("./lib/topojson/tokyo.topojson", function(data){
             .attr('d', path)
             .attr('fill-opacity', 0)
             .attr('stroke', function(d,i){
-                console.log(d.properties.name);
+                //console.log(d.properties.name);
+                var line = d.properties.name
+                console.log(d.properties);
+                //console.log(averageUserAmountArray['line']);
                 if(d.properties.name == "11号線半蔵門線"){
                     return "#9b7cb6"
                 }
@@ -71,21 +90,38 @@ d3.json("./lib/topojson/tokyo.topojson", function(data){
                 return "#fff"
             })
             .attr('stroke-opacity', 1)
-            .attr('stroke-width', '2px')
-            .on("mouseover", function(d){
-                console.log(d);
-                var name = d.properties.name;
-                svg.selectAll("path").attr('stroke-width', function(d){
-                    console.log(d);
-                    if(d.properties.name == name){
-                        return "2px";
-                    }else{
-                        return "0.5px";
-                    }
-                });
-            });
+            .attr('stroke-width', function(d){
+                if(d.properties.name == "11号線半蔵門線"){
+                    var num = averageUserAmountArray['11号線半蔵門線'];
+                }
+                if(d.properties.name == "13号線副都心線"){
+                    var num = averageUserAmountArray['13号線副都心線'];
+                }
+                if(d.properties.name == "4号線丸ノ内線" | d.properties.name == "4号線丸ノ内線分岐線"){
+                    var num = averageUserAmountArray['4号線丸ノ内線'];
+                }
+                if(d.properties.name == "2号線日比谷線"){
+                    var num = averageUserAmountArray['2号線日比谷線'];
+                }
+                if(d.properties.name == "3号線銀座線"){
+                    var num = averageUserAmountArray['3号線銀座線"'];
+                }
+                if(d.properties.name == "5号線東西線"){
+                    var num = averageUserAmountArray['5号線東西線'];
+                }
+                if(d.properties.name == "7号線南北線"){
+                    var num = averageUserAmountArray['7号線南北線'];
+                }
+                if(d.properties.name == "8号線有楽町線"){
+                    var num = averageUserAmountArray['8号線有楽町線'];
+                }
+                if(d.properties.name == "9号線千代田線"){
+                    var num = averageUserAmountArray['9号線千代田線'];
+                }
+                return (num / 132.0) * 5.0;
+            })
     });
-
+/*
     d3.json("lib/tokyo_metro_station.topojson", function(data) {
         var count = 1;
         var path = d3.geo.path().projection(projection);
@@ -102,7 +138,7 @@ d3.json("./lib/topojson/tokyo.topojson", function(data){
             .attr('stroke-opacity', 1)
             .attr('stroke-width', '3px')
     });
-
+*/
 
 });
 
