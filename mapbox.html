@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>Load GeoJSON</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/v2.3.0/mapbox.css' rel='stylesheet' />
+<style>
+    body { margin:0; padding:0; }
+    #map { position:absolute; top:0; bottom:0; width:100%; }
+    .line_chiyoda{
+        color: #fff;
+    }
+    .sidebar {
+        width:10%;
+    }
+    .map {
+        border-left:1px solid #fff;
+        position:absolute;
+        left:10%;
+        width:90%;
+        top:0;
+        bottom:0;
+    }
+    .pad2 {
+        padding:20px;
+        -webkit-box-sizing:border-box;
+        -moz-box-sizing:border-box;
+        box-sizing:border-box;
+    }
+</style>
+</head>
+<body>
+    <div class='sidebar pad2'>Listing</div>
+    <div id='map' class='map pad2'>Map</div>
+<script src="js/mapbox.js"></script>
+</body>
+</html>

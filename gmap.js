@@ -42,7 +42,6 @@ function initMap() {
     map.setOptions({styles: styles});
 
     var subwayMapType = new google.maps.ImageMapType({
-        name: "地下鉄", alt: "地下鉄を見る",
         tileSize: new google.maps.Size(256,256),
         isPng: true,
         maxZoom: 22,
